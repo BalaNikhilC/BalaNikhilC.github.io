@@ -3,111 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>My Content Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- DESIGN SETTINGS (CSS) --- */
-        :root {
-            --primary-color: #2563eb; /* Blue */
-            --bg-color: #f8fafc;      /* Light Grey */
-            --text-color: #1e293b;    /* Dark Grey */
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        header {
-            background: #ffffff;
-            padding: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1 { margin: 0; color: var(--primary-color); }
-        h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 40px;}
+        /* --- SHARED STYLES --- */
+        :root { --primary: #2563eb; --dark: #0f172a; --light: #f8fafc; --accent: #f59e0b; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: #334155; scroll-behavior: smooth; }
         
-        .project-card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
+        /* NAV */
+        nav { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        nav a { margin: 0 15px; text-decoration: none; color: #334155; font-weight: 600; text-transform: uppercase; font-size: 0.9rem;}
+        nav a:hover { color: var(--primary); }
+        nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
 
-        .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+        /* SECTIONS */
+        section { padding: 60px 20px; max-width: 900px; margin: 0 auto; border-bottom: 1px solid #e2e8f0; }
+        h2 { font-size: 2rem; color: var(--dark); margin-bottom: 20px; }
+        
+        /* VIDEO GRID */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #64748b;
-        }
+        /* BUTTONS */
+        .btn { display: inline-block; background: var(--primary); color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: 600; }
+        .insta-btn { background: #E1306C; color: white; padding: 15px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; margin-top: 10px;}
+
+        /* RESUME */
+        .resume-item { margin-bottom: 30px; }
+        .resume-title { font-weight: bold; font-size: 1.1rem; }
+        
+        footer { text-align: center; padding: 40px; background: var(--dark); color: white; margin-top: 50px;}
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>[Your Name Here]</h1>
-            <p>Electronics & Communication Engineering Student</p>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="#youtube">YouTube</a>
+        <a href="#instagram">Instagram</a>
+        <a href="stories.html">Stories</a> <a href="#resume">Resume</a>
+    </nav>
+
+    <section id="home" style="text-align:center; padding: 100px 20px;">
+        <h1 style="font-size: 3rem; margin: 0; color: var(--primary);">Welcome to My Hub</h1>
+        <p style="font-size: 1.2rem; color: #64748b;">Creator | Storyteller | Engineering Student</p>
+        <br>
+        <a href="stories.html" class="btn" style="background: var(--accent);">Read My Latest Stories &rarr;</a>
+    </section>
+
+    <section id="youtube">
+        <h2>YouTube Channel</h2>
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/watch?v=tzU0ubldxqU&t=103s" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+             <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/watch?v=fUIkXGDHY8s" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <div class="container">
-        
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                Hello! I am a final-year ECE student passionate about embedded systems, networking, and automotive tech. 
-                I am currently working on projects involving SDN and data center networks.
-            </p>
-        </section>
+    <section id="instagram">
+        <h2>Instagram Feed</h2>
+        <p>Follow my daily updates, behind the scenes, and photography.</p>
+        <a href="https://instagram.com/nikufied" target="_blank" class="insta-btn">
+            Follow @nikufied
+        </a>
+    </section>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            
-            <div class="project-card">
-                <h3>SDN Energy Efficiency</h3>
-                <p><strong>Title:</strong> Energy-Aware Sleep Mode Routing in SDN-Based Fat Tree Networks.</p>
-                <p>This project uses Mininet emulation to optimize energy consumption in data centers.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Automotive Tech Analysis</h3>
-                <p>Researching modern vehicle protocols and features in SUVs (specifically Tata Harrier/Safari platforms).</p>
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Feel free to reach out to me for collaboration.</p>
-            <a href="mailto:your-email@example.com" class="btn">Email Me</a>
-        </section>
-
-    </div>
+    <section id="resume">
+        <h2>Educational Activities</h2>
+        <div class="resume-item">
+            <div class="resume-title">Bachelor of Engineering (ECE)</div>
+            <p>Final Year Student | Focusing on Embedded Systems & Networking</p>
+        </div>
+        <a href="resume.pdf" download class="btn">Download Full Resume</a>
+    </section>
 
     <footer>
-        <p>&copy; 2025 [Your Name]. Hosted on GitHub Pages.</p>
+        <p>&copy; 2025. All rights reserved.</p>
     </footer>
 
 </body>
