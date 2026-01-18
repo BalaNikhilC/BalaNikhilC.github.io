@@ -3,126 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikufied | The Chronicles</title>
+    <title>Nikufied | 3D Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #4f46e5;
-            --accent: #10b981; 
-            --dark: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.95);
-        }
+        /* --- CORE STYLES --- */
+        :root { --primary: #4f46e5; --accent: #f43f5e; --dark: #0f172a; --card-bg: rgba(255, 255, 255, 0.9); }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--dark); color: #e2e8f0; overflow-x: hidden; perspective: 1000px; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            background-color: var(--dark);
-            color: #e2e8f0;
-            overflow-x: hidden;
-            perspective: 1000px;
-        }
-
+        /* ANIMATED BACKGROUND */
         .background-fx {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #064e3b, #0f172a, #312e81); 
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(45deg, #0f172a, #1e1b4b, #312e81);
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
         }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
+        /* NAV */
+        nav { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 20px 0; position: sticky; top: 0; z-index: 1000; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        nav a { margin: 0 15px; text-decoration: none; color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: 0.3s; }
         nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
 
-        .header-section {
-            text-align: center;
-            padding: 100px 20px 50px;
-        }
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(to right, #fff, #6ee7b7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-        }
+        /* SECTIONS */
+        section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        section.visible { opacity: 1; transform: translateY(0); }
+        h1 { font-size: 4rem; font-weight: 900; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        h2 { font-size: 2.5rem; margin-bottom: 40px; color: #fff; text-align: center;}
 
-        .story-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
+        /* 3D CARDS & PHONE */
+        .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; perspective: 1000px; }
+        .tilt-card { background: var(--card-bg); border-radius: 20px; padding: 10px; color: var(--dark); transform-style: preserve-3d; transition: transform 0.1s; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .tilt-card-content { transform: translateZ(30px); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .story-card {
-            background: var(--card-bg);
-            color: var(--dark);
-            padding: 30px;
-            border-radius: 20px;
-            position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(0) rotateY(0);
-            transition: transform 0.1s ease-out; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-left: 10px solid var(--accent); 
-        }
+        .phone-stage { perspective: 1500px; display: flex; justify-content: center; margin: 40px 0; }
+        .phone-frame { width: 300px; height: 600px; background: #000; border-radius: 40px; border: 8px solid #333; overflow: hidden; transform: rotateY(-10deg) rotateX(5deg); animation: floatPhone 6s ease-in-out infinite; transition: transform 0.5s; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .phone-frame:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.02); }
+        .phone-frame video { width: 100%; height: 100%; object-fit: cover; }
+        @keyframes floatPhone { 0%, 100% { transform: rotateY(-10deg) rotateX(5deg) translateY(0); } 50% { transform: rotateY(-5deg) rotateX(2deg) translateY(-20px); } }
 
-        .story-content {
-            transform: translateZ(20px);
-        }
-
-        .episode-badge {
-            background: var(--dark);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .date {
-            float: right;
-            font-size: 0.85rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        h2 { margin-top: 0; margin-bottom: 10px; font-size: 1.8rem; }
-        p { line-height: 1.6; color: #334155; }
-
-        footer { text-align: center; padding: 50px; color: #94a3b8; }
-
+        .btn { display: inline-block; background: var(--primary); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: transform 0.2s; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4); }
+        .btn:hover { transform: translateY(-3px); }
+        footer { text-align: center; padding: 50px; color: #64748b; }
     </style>
 </head>
 <body>
@@ -131,67 +54,88 @@
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="stories.html" style="color: var(--accent); border-bottom: 2px solid var(--accent);">Stories</a>
-        <a href="index.html#youtube">YouTube</a>
-        <a href="index.html#reel">Reel</a>
-        <a href="index.html#resume">Resume</a>
+        <a href="stories.html">Stories</a> 
+        <a href="#youtube">YouTube</a>
+        <a href="#reel">Reel</a>
+        <a href="#resume">Resume</a>
     </nav>
 
-    <div class="header-section">
-        <h1>THE ARCHIVES</h1>
-        <p style="color: #cbd5e1;">Weekly episodes from my engineering journey.</p>
-    </div>
+    <section id="home" style="text-align:center; padding: 150px 20px;">
+        <h1>NIKUFIED</h1>
+        <p style="font-size: 1.5rem; color: #94a3b8; margin-top:0;">Engineering Reality through Content</p>
+        <br><br>
+        <a href="#reel" class="btn">Watch Latest Reel</a>
+    </section>
 
-    <div class="story-container">
-        
-        <div class="story-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
-            <div class="story-content">
-                <span class="episode-badge">Episode 02</span>
-                <span class="date">Oct 24, 2025</span>
-                <h2>The Bug That Wouldn't Die</h2>
-                <p>
-                    I spent 14 hours staring at the microcontroller. The LED was supposed to blink every second. Instead, it was screaming in Morse code... or at least that's what it felt like. 
-                    <br><br>
-                    It turns out, the issue wasn't the code. It was a loose wire I had ignored three days ago. Lesson learned: Hardware is just as guilty as software.
-                </p>
+    <section id="reel">
+        <h2>Latest Drop</h2>
+        <div class="phone-stage">
+            <div class="phone-frame">
+                <video autoplay muted loop playsinline>
+                    <source src="reel.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://instagram.com/nikufied" class="btn" style="background: #E1306C;">Open Instagram</a>
+        </div>
+    </section>
 
-        <div class="story-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
-            <div class="story-content">
-                <span class="episode-badge">Episode 01</span>
-                <span class="date">Oct 17, 2025</span>
-                <h2>Hello, World (Again)</h2>
-                <p>
-                    Starting a new project always feels like standing at the edge of a cliff. You have the tools, you have the knowledge, but the drop is steep. Today, I decided to finally build my own portfolio site from scratch...
-                </p>
+    <section id="youtube">
+        <h2>YouTube Hub</h2>
+        <div class="card-container">
+            <div class="tilt-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
+                <div class="tilt-card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/fUIkXGDHY8s?controls=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="margin:0;">Cinematic Vlog</h3>
+                        <p style="font-size: 0.9rem; color: #555;">Exploring the unknown.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tilt-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
+                <div class="tilt-card-content">
+                    <div class="video-container">
+                         <iframe src="https://www.youtube.com/embed/tzU0ubldxqU?controls=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="margin:0;">Tech Review</h3>
+                        <p style="font-size: 0.9rem; color: #555;">My honest opinion.</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-    </div>
+    <section id="resume" style="text-align: center;">
+        <h2>The Engineer</h2>
+        <div class="tilt-card" style="display:inline-block; max-width: 500px; width: 100%; text-align: left;" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
+            <div class="tilt-card-content" style="padding: 30px;">
+                <h3 style="margin-top:0;">B.Tech (ECE)</h3>
+                <p>Final Year Student | Embedded Systems</p>
+                <br>
+                <a href="#" class="btn" style="width: 100%; text-align: center;">Download CV</a>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        &copy; 2025 Nikufied Stories.
-    </footer>
+    <footer>&copy; 2025 Nikufied.</footer>
 
     <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+
         function tilt(e, card) {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left; 
-            const y = e.clientY - rect.top; 
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = ((y - centerY) / centerY) * -5; 
-            const rotateY = ((x - centerX) / centerX) * 5;
-
+            const x = e.clientX - rect.left; const y = e.clientY - rect.top; 
+            const rotateX = ((y - rect.height/2) / (rect.height/2)) * -10; 
+            const rotateY = ((x - rect.width/2) / (rect.width/2)) * 10;
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         }
-
-        function resetTilt(card) {
-            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-        }
+        function resetTilt(card) { card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`; }
     </script>
 </body>
 </html>
