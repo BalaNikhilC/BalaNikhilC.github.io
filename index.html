@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikufied | 3D Hub</title>
+    <title>Nikufied | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CORE STYLES --- */
-        :root { --primary: #4f46e5; --accent: #f43f5e; --dark: #0f172a; --card-bg: rgba(255, 255, 255, 0.9); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--dark); color: #e2e8f0; overflow-x: hidden; perspective: 1000px; }
+        /* --- 1. GLOBAL RESET (FIXES ALIGNMENT) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root { 
+            --primary: #4f46e5; 
+            --accent: #f43f5e; 
+            --dark: #0f172a; 
+            --card-bg: rgba(255, 255, 255, 0.95); 
+        }
 
-        /* ANIMATED BACKGROUND */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--dark); 
+            color: #e2e8f0; 
+            overflow-x: hidden; 
+            perspective: 1000px; 
+        }
+
+        /* --- BACKGROUND --- */
         .background-fx {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: linear-gradient(45deg, #0f172a, #1e1b4b, #312e81);
@@ -19,33 +33,102 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* NAV */
-        nav { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 20px 0; position: sticky; top: 0; z-index: 1000; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        nav a { margin: 0 15px; text-decoration: none; color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; transition: 0.3s; }
-        nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        /* --- 2. NEW LOGO NAVIGATION --- */
+        nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%; /* Spacing on sides */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; /* Aligns Logo and Links */
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* SECTIONS */
-        section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        section.visible { opacity: 1; transform: translateY(0); }
-        h1 { font-size: 4rem; font-weight: 900; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        h2 { font-size: 2.5rem; margin-bottom: 40px; color: #fff; text-align: center;}
+        /* Logo Styling */
+        .nav-logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* If you use an image for logo */
+        .nav-logo img { height: 40px; margin-right: 10px; }
 
-        /* 3D CARDS & PHONE */
-        .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; perspective: 1000px; }
-        .tilt-card { background: var(--card-bg); border-radius: 20px; padding: 10px; color: var(--dark); transform-style: preserve-3d; transition: transform 0.1s; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a.active { color: var(--primary); }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; width: 100%; }
+        
+        h1 { 
+            font-size: 4rem; 
+            font-weight: 900; 
+            text-align: center;
+            background: linear-gradient(to right, #fff, #94a3b8); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 10px; 
+        }
+        h2 { font-size: 2.5rem; margin-bottom: 40px; color: #fff; text-align: center; }
+
+        /* --- 3D CARDS & PHONE --- */
+        .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; perspective: 1000px; }
+        .tilt-card { 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            padding: 15px; 
+            color: var(--dark); 
+            transform-style: preserve-3d; 
+            transition: transform 0.1s; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
+        }
         .tilt-card-content { transform: translateZ(30px); }
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .phone-stage { perspective: 1500px; display: flex; justify-content: center; margin: 40px 0; }
-        .phone-frame { width: 300px; height: 600px; background: #000; border-radius: 40px; border: 8px solid #333; overflow: hidden; transform: rotateY(-10deg) rotateX(5deg); animation: floatPhone 6s ease-in-out infinite; transition: transform 0.5s; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        /* Phone Animation */
+        .phone-stage { perspective: 1500px; display: flex; justify-content: center; margin: 50px 0; }
+        .phone-frame { 
+            width: 300px; height: 600px; background: #000; 
+            border-radius: 40px; border: 8px solid #333; overflow: hidden; 
+            transform: rotateY(-10deg) rotateX(5deg); 
+            animation: floatPhone 6s ease-in-out infinite; 
+            transition: transform 0.5s; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6); 
+        }
         .phone-frame:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.02); }
         .phone-frame video { width: 100%; height: 100%; object-fit: cover; }
-        @keyframes floatPhone { 0%, 100% { transform: rotateY(-10deg) rotateX(5deg) translateY(0); } 50% { transform: rotateY(-5deg) rotateX(2deg) translateY(-20px); } }
+        @keyframes floatPhone { 
+            0%, 100% { transform: rotateY(-10deg) rotateX(5deg) translateY(0); } 
+            50% { transform: rotateY(-5deg) rotateX(2deg) translateY(-20px); } 
+        }
 
         .btn { display: inline-block; background: var(--primary); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: transform 0.2s; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4); }
         .btn:hover { transform: translateY(-3px); }
-        footer { text-align: center; padding: 50px; color: #64748b; }
+        footer { text-align: center; padding: 50px; color: #64748b; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* Mobile Fix */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -53,14 +136,18 @@
     <div class="background-fx"></div>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="stories.html">Stories</a> 
-        <a href="#youtube">YouTube</a>
-        <a href="#reel">Reel</a>
-        <a href="#resume">Resume</a>
+        <a href="index.html" class="nav-logo">
+            NIKUFIED
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="stories.html">Stories</a>
+            <a href="#youtube">YouTube</a>
+            <a href="#reel">Reel</a>
+        </div>
     </nav>
 
-    <section id="home" style="text-align:center; padding: 150px 20px;">
+    <section id="home" style="text-align:center; padding-top: 150px;">
         <h1>NIKUFIED</h1>
         <p style="font-size: 1.5rem; color: #94a3b8; margin-top:0;">Engineering Reality through Content</p>
         <br><br>
@@ -73,7 +160,6 @@
             <div class="phone-frame">
                 <video autoplay muted loop playsinline>
                     <source src="reel.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
             </div>
         </div>
@@ -92,7 +178,7 @@
                     </div>
                     <div style="padding: 20px;">
                         <h3 style="margin:0;">Cinematic Vlog</h3>
-                        <p style="font-size: 0.9rem; color: #555;">Exploring the unknown.</p>
+                        <p style="font-size: 0.9rem; color: #555; margin-top: 5px;">Exploring the unknown.</p>
                     </div>
                 </div>
             </div>
@@ -103,7 +189,7 @@
                     </div>
                     <div style="padding: 20px;">
                         <h3 style="margin:0;">Tech Review</h3>
-                        <p style="font-size: 0.9rem; color: #555;">My honest opinion.</p>
+                        <p style="font-size: 0.9rem; color: #555; margin-top: 5px;">My honest opinion.</p>
                     </div>
                 </div>
             </div>
@@ -125,9 +211,6 @@
     <footer>&copy; 2025 Nikufied.</footer>
 
     <script>
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-
         function tilt(e, card) {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left; const y = e.clientY - rect.top; 
