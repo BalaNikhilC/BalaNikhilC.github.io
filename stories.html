@@ -3,71 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Stories</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Nikufied | The Chronicles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- KEEPING STYLES SAME AS MAIN PAGE --- */
-        :root { --primary: #2563eb; --dark: #0f172a; --light: #f8fafc; --accent: #f59e0b; }
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: #334155; }
-        
-        nav { background: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
-        nav a { margin: 0 15px; text-decoration: none; color: #334155; font-weight: 600; text-transform: uppercase; font-size: 0.9rem;}
-        nav a:hover { color: var(--primary); }
-        nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
-
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* STORY CARDS */
-        .story-entry {
-            background: white;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--accent);
+        /* --- COPYING CORE STYLES FROM INDEX.HTML FOR CONSISTENCY --- */
+        :root {
+            --primary: #4f46e5;
+            --accent: #10b981; /* Green for Stories to differentiate */
+            --dark: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
-        .story-meta { color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px; display: block;}
-        .story-title { margin: 0 0 15px 0; color: var(--dark); font-size: 1.8rem; }
-        .story-content { line-height: 1.8; font-size: 1.1rem; }
-        
-        footer { text-align: center; padding: 40px; background: var(--dark); color: white; margin-top: 50px;}
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--dark);
+            color: #e2e8f0;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        /* ANIMATED BACKGROUND */
+        .background-fx {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            /* Different hue for the stories page */
+            background: linear-gradient(45deg, #064e3b, #0f172a, #312e81); 
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* NAV */
+        nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+
+        /* HEADER */
+        .header-section {
+            text-align: center;
+            padding: 100px 20px 50px;
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, #6ee7b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        /* --- STORY CARDS --- */
+        .story-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .story-card {
+            background: var(--card-bg);
+            color: var(--dark);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(0) rotateY(0);
+            transition: transform 0.1s ease-out; /* Smooth tilt */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-left: 10px solid var(--accent); /* Colored spine like a book */
+        }
+
+        /* 3D Depth for content */
+        .story-content {
+            transform: translateZ(20px);
+        }
+
+        .episode-badge {
+            background: var(--dark);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .date {
+            float: right;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        h2 { margin-top: 0; margin-bottom: 10px; font-size: 1.8rem; }
+        p { line-height: 1.6; color: #334155; }
+
+        /* Footer */
+        footer { text-align: center; padding: 50px; color: #94a3b8; }
+
     </style>
 </head>
 <body>
 
+    <div class="background-fx"></div>
+
     <nav>
-        <a href="index.html">Home</a> <a href="index.html#youtube">YouTube</a>
-        <a href="index.html#instagram">Instagram</a>
-        <a href="stories.html" class="active">Stories</a>
+        <a href="index.html">Home</a>
+        <a href="stories.html" style="color: var(--accent); border-bottom: 2px solid var(--accent);">Stories</a>
+        <a href="index.html#youtube">YouTube</a>
+        <a href="index.html#reel">Reel</a>
         <a href="index.html#resume">Resume</a>
     </nav>
 
-    <div class="container">
-        <h1 style="text-align: center; margin-bottom: 50px;">Weekly Stories</h1>
+    <div class="header-section">
+        <h1>THE ARCHIVES</h1>
+        <p style="color: #cbd5e1;">Weekly episodes from my engineering journey.</p>
+    </div>
 
-        <article class="story-entry">
-            <span class="story-meta">December 16, 2025 • Episode 2</span>
-            <h2 class="story-title">The Late Night Debugging Session</h2>
+    <div class="story-container">
+        
+        <div class="story-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
             <div class="story-content">
-                <p>This is where you write your story content. You can write as much as you want here.</p>
-                <p>For example: I was working on my final year project until 3 AM yesterday. The code just wouldn't compile. I realized that sometimes, engineering is less about knowing the answer and more about not giving up until you find it.</p>
+                <span class="episode-badge">Episode 02</span>
+                <span class="date">Oct 24, 2025</span>
+                <h2>The Bug That Wouldn't Die</h2>
+                <p>
+                    I spent 14 hours staring at the microcontroller. The LED was supposed to blink every second. Instead, it was screaming in Morse code... or at least that's what it felt like. 
+                    <br><br>
+                    It turns out, the issue wasn't the code. It was a loose wire I had ignored three days ago. Lesson learned: Hardware is just as guilty as software.
+                </p>
             </div>
-        </article>
+        </div>
 
-        <article class="story-entry">
-            <span class="story-meta">December 9, 2025 • Episode 1</span>
-            <h2 class="story-title">Welcome to the Series</h2>
+        <div class="story-card" onmousemove="tilt(event, this)" onmouseleave="resetTilt(this)">
             <div class="story-content">
-                <p>This is the first episode of my weekly updates. Here I will document my journey through engineering, content creation, and life.</p>
+                <span class="episode-badge">Episode 01</span>
+                <span class="date">Oct 17, 2025</span>
+                <h2>Hello, World (Again)</h2>
+                <p>
+                    Starting a new project always feels like standing at the edge of a cliff. You have the tools, you have the knowledge, but the drop is steep. Today, I decided to finally build my own portfolio site from scratch...
+                </p>
             </div>
-        </article>
+        </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2025. All rights reserved.</p>
+        &copy; 2025 Nikufied Stories.
     </footer>
 
+    <script>
+        // 3D TILT LOGIC (Same as Index, keeps experience consistent)
+        function tilt(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top; 
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Subtle tilt for text reading (Max 5deg)
+            const rotateX = ((y - centerY) / centerY) * -5; 
+            const rotateY = ((x - centerX) / centerX) * 5;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        }
+
+        function resetTilt(card) {
+            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+        }
+    </script>
 </body>
 </html>
